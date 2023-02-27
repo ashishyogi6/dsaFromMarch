@@ -1,0 +1,30 @@
+//This is first approach
+//will come back to it after
+//question link  https://www.codingninjas.com/codestudio/problems/print-like-a-wave_893268
+
+vector<int> wavePrint(vector<vector<int>> arr, int nRows, int mCols)
+{
+    int i=0,j=0;
+    bool k=false;
+    vector<int> v1;
+    while(j!=mCols){
+        if(k==false){
+            i=0;
+            while(i<nRows){
+                v1.push_back(arr[i][j]);
+                i++;
+            }
+            k=true;
+        }
+        else{
+            i=nRows-1;
+            while(i>=0){
+                v1.push_back(arr[i][j]);
+                i--;
+            }
+            k=false;
+        }
+        j++;
+    }
+    return v1;
+}
