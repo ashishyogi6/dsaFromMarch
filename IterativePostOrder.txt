@@ -1,0 +1,22 @@
+while(curr!=null || !st.empty()){
+  if(curr!=null){
+    st.push(curr);
+    curr=curr->left;
+  }
+  else{
+    temp=st.top()->right;
+    if(temp==null){
+      temp=st.top();
+      st.pop();
+      v1.push_back(temp);
+      while(!st.empty() && temp==st.top()->right){
+        temp=st.top();
+        st.pop();
+        v1.push_back(temp->val);
+      }
+    }
+    else{
+      curr=temp;
+    }
+  }
+}
