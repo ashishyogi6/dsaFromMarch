@@ -1,0 +1,42 @@
+vector<int> nextLargerNodes(ListNode* head) {
+        ListNode* temp=reverseList(head);
+        vector<int> v1;
+        stack<int> st;
+        v1.push_back(0);
+        st.push(temp->val);
+        temp=temp->next;
+        while(temp!=NULL){
+            if(!st.empty() && temp->val>=st.top()){
+                while(!st.empty() && st.top()<=temp->val) st.pop();
+                if(st.empty()){
+                    v1.push_back(0);
+                    st.push(temp->val);
+                }
+                else{
+                    int temp1=temp->val;
+                    v1.push_back(st.top());
+                    st.push(temp1);
+                }
+            }
+            else{
+                int temp1=temp->val;
+                    v1.push_back(st.top());
+                    st.push(temp1);
+            }
+            temp=temp->next;
+        }
+        for(int i=0;i<(v1.size())/2;i++) swap(v1[i],v1[v1.size()-1-i]) ;
+        return v1;
+    }
+
+    ListNode* reverseList(ListNode* head) {
+        if (head == nullptr || head->next == nullptr) {
+            return head;
+        }
+
+        ListNode* newHead = reverseList(head->next);
+        head->next->next = head;
+        head->next = nullptr;
+
+        return newHead;
+}
