@@ -33,3 +33,29 @@ bool k=false;
             if(arr[i][k]==0) return false;
         }
         return true;
+        
+        
+   using stack
+   
+   stack<int> st;
+        for(int i=0;i<n;i++) st.push(i);
+        while(st.size()>1){
+            int j=st.top();
+            st.pop();
+            int k=st.top();
+            st.pop();
+            if(arr[j][k]==1){
+                if(arr[k][j]==0) st.push(k);
+                else continue;
+            }
+            else{
+                if(arr[k][j]==1) st.push(j);
+                else continue;
+            }
+        }
+        if(st.empty()) return -1;
+        for(int i=0;i<n;i++){
+            if(st.top()==i) continue;
+            if(arr[st.top()][i]==1 || arr[i][st.top()]==0) return -1;
+        }
+        return st.top();
