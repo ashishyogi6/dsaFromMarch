@@ -1,0 +1,35 @@
+https://practice.geeksforgeeks.org/problems/the-celebrity-problem
+
+broot-force
+bool k=false;
+        for(int i=0;i<n;i++){
+            if(arr[0][i]==1){
+                k=true;
+                if(isIt(arr,i,n)){
+                    if(isItReally(arr,i,n)) return i;
+                }
+            }
+        }
+        if(k==false){
+            for(int i=0;i<n;i++){
+                if(arr[1][i]==1){
+                    k=true;
+                    if(isIt(arr,i,n)){
+                        if(isItReally(arr,i,n)) return i;
+                    }
+                }
+            }
+        }
+        return -1;
+    }
+    
+    bool isIt(vector<vector<int>> &arr,int k,int n){
+        for(int i=0;i<n;i++) if(arr[k][i]==1) return false;
+        return true;
+    }
+    bool isItReally(vector<vector<int>> &arr,int k,int n){
+        for(int i=1;i<n;i++){
+            if(i==k) continue;
+            if(arr[i][k]==0) return false;
+        }
+        return true;
