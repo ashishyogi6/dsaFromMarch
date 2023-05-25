@@ -1,0 +1,42 @@
+https://leetcode.com/problems/sum-of-subarray-minimums/
+
+//done by me but tle
+//using two stacks
+
+stack<int> st1;
+        stack<int> st2;
+        bool k=true;
+        int total=0;
+        for(int i=0;i<arr.size();i++){
+            total+=arr[i];
+            st1.push(arr[i]);
+        }
+        while(st1.size()+st2.size()>1){
+            if(k){
+                calculate(st1,st2,total);
+                k=false;
+            }
+            else{
+                calculate(st2,st1,total);
+                k=true;
+            }
+        }
+        return total;
+    }
+
+    void calculate(stack<int> &st1,stack<int> &st2,int &total){
+        int times=st1.size()-1;
+        int t;
+        int u;
+        for(int i=0;i<times;i++){
+            t=st1.top();
+            st1.pop();
+            u=st1.top();
+            st1.pop();
+            total+=(min(t,u));
+            total=total % int(1e9+7);
+            st2.push(min(t,u));
+            st1.push(u);
+        }
+        st1.pop();
+    }
