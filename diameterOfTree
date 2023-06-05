@@ -1,0 +1,17 @@
+
+
+int diameterOfBinaryTree(TreeNode* root) {
+        if(root==NULL) return 0;
+        int maxa=0;
+        jaiHo(root,maxa);
+        return maxa;
+        
+    }
+    
+    int jaiHo(TreeNode* root,int &maxa){
+        if(root==NULL) return 0;
+        int lh=jaiHo(root->left,maxa);
+        int rh=jaiHo(root->right,maxa);
+        maxa=max(maxa,lh+rh);
+        return 1+max(lh,rh);
+    }
