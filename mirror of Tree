@@ -1,0 +1,15 @@
+TreeNode* invertTree(TreeNode* root) {
+        if(root==NULL) return NULL;
+        solve(root);
+        return root;
+    }
+    
+    
+    void solve(TreeNode* root){
+        if(root==NULL ) return;
+        TreeNode* temp=root->left;
+        root->left=root->right;
+        root->right=temp; 
+        solve(root->left);
+        solve(root->right);
+    }
