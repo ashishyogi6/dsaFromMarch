@@ -1,0 +1,33 @@
+Done on Leetcode..
+Without hint on my own
+
+vector<vector<int>> zigzagLevelOrder(TreeNode* root) {
+        queue<TreeNode*> q1;
+        vector<vector<int>> v1;
+        bool k=false;
+        if(root==NULL) return v1;
+        q1.push(root);
+        q1.push(NULL);
+        while(!(q1.empty())){
+            if(q1.size()==1  && q1.front()==NULL) break;
+            vector<int> ans;
+            ans=solveWithStack(q1,k);
+            v1.push_back(ans);
+            if(q1.front()==NULL) q1.pop();
+            q1.push(NULL);
+        }
+        return v1;
+    }
+
+    vector<int> solveWithStack(queue<TreeNode*> &q1,bool &k){
+        vector<int> ans;
+        while(q1.front()!=NULL){
+            if(q1.front()->left!=NULL) q1.push(q1.front()->left);
+            if(q1.front()->right!=NULL) q1.push(q1.front()->right);
+            ans.push_back(q1.front()->val);
+            q1.pop();
+        }
+        if(k) reverse(ans.begin(),ans.end());
+        k=(!k);
+        return ans;
+    }
