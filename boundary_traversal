@@ -1,0 +1,54 @@
+
+My code by watching intuition only , clean code is required
+
+vector <int> boundary(Node *root)
+    {
+        vector<int> ans;
+        if(root==NULL) return ans;
+        if(root->left==NULL && root->right==NULL){
+            ans.push_back(root->data);
+            return ans;
+        }
+        Node* temp=root;
+        ans.push_back(temp->data);
+        temp=temp->left;
+        while(temp!=NULL){
+            if(temp->left==NULL && temp->right==NULL) break;
+            if(temp->left==NULL){
+                ans.push_back(temp->data);
+                temp=temp->right;
+                continue;
+            }
+            ans.push_back(temp->data);
+            temp=temp->left;
+        }
+        inorder(root,ans);
+        stack<Node*> st;
+        root=root->right;
+        while(root!=NULL){
+            if(root->left==NULL && root->right==NULL) break;
+            if(root->right==NULL){
+                st.push(root);
+                root=root->left;
+                continue;
+            }
+            st.push(root);
+            root=root->right;
+        }
+        while(!st.empty()){
+            ans.push_back(st.top()->data);
+            st.pop();
+        }
+        return ans;
+    }
+    
+    void inorder(Node* root,vector<int> &ans){
+        if(root==NULL) return;
+        if(root->left==NULL && root->right==NULL){
+            ans.push_back(root->data);
+            return;
+        }
+        
+        inorder(root->left,ans);
+        inorder(root->right,ans);
+    }
