@@ -1,0 +1,20 @@
+https://leetcode.com/problems/symmetric-tree/
+
+my intiution brute force
+traverse left of  one node and right of other with inorder traversal :
+
+bool isSymmetric(TreeNode* root) {
+       bool k=true;
+       solve(root->left,root->right,k);
+       return k;
+    }
+
+    void solve(TreeNode* root1,TreeNode* root2, bool &k){
+        if((root1==NULL && root2==NULL) || k==false) return;
+        if((root1!=NULL && root2==NULL) || (root2!=NULL && root1==NULL) ||                  root1->val!=root2->val) {
+            k=false;
+            return;
+        }
+        solve(root1->left,root2->right,k);
+        solve(root1->right,root2->left,k);
+    }
