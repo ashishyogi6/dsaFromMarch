@@ -1,0 +1,47 @@
+approach:
+brute force: without any hint
+level order traversal and at every step in vector insert last element(rightmost) of current level
+
+vector<int> rightView(Node *root)
+    {
+      deque<Node*> q;
+      vector<int> v1;
+      if(root==NULL) return v1;
+      q.push_back(root);
+      q.push_back(NULL);
+      while(q.size()>1){
+          q.pop_back();
+          v1.push_back(q.back()->data);
+          q.push_back(NULL);
+          while(q.front()!=NULL){
+                if(q.front()->left!=NULL) q.push_back(q.front()->left);
+                if(q.front()->right!=NULL) q.push_back(q.front()->right);
+                q.pop_front();
+          }
+          q.pop_front();
+          if(q.size()==1 && q.front()==NULL) continue;
+          if(q.size()>=1) q.push_back(NULL);
+      }
+      return v1;
+    }
+    
+    
+    optimal approach:
+    Here we do reverese preOrder and just mainTain current level and max level if any time currentLevel is more than max means it is rightmost and visint first time 
+    then we add it..
+    
+    vector<int> v1;
+    int maxLevel=0;
+    solve(root,v1,maxLevel,1);
+    return v1;
+    }
+    
+    void solve(Node* root,vector<int> &v1,int &maxLevel,int currentLevel){
+        if(root==NULL) return;
+        if(currentLevel>maxLevel){
+                v1.push_back(root->data);
+                maxLevel=currentLevel;
+        }
+        solve(root->right,v1,maxLevel,currentLevel+1);
+        solve(root->left,v1,maxLevel,currentLevel+1);
+    }
