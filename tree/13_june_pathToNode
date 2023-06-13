@@ -1,0 +1,23 @@
+https://www.interviewbit.com/problems/path-to-given-node/
+
+
+ void solve1(TreeNode* a, bool &k,int &b,vector<int> &v1){
+    if(k==true) return;
+    if(a==NULL) return ;
+    if(a->val==b ){
+        v1.insert(v1.begin(),a->val);
+        k=true;
+        return;
+    }
+    solve1(a->left,k,b,v1);
+    solve1(a->right,k,b,v1);
+    if(k==true) v1.insert(v1.begin(),a->val);
+}
+
+
+vector<int> Solution::solve(TreeNode* a, int b) {
+    vector<int> v1;
+    bool k=false;
+    solve1(a,k,b,v1);
+    return v1;
+}
