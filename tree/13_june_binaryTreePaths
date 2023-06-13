@@ -1,0 +1,33 @@
+https://leetcode.com/problems/binary-tree-paths/description/
+
+
+In my own approach I was confused how to put -> this sign as I have not studied string as of now 
+got hint from submission of others
+
+
+vector<string> binaryTreePaths(TreeNode* root) {
+        vector<string> v1;
+        string s="";
+        solve(root,s,v1);
+        
+        return v1;
+    }
+
+    void solve(TreeNode* root,string s,vector<string> &v1){
+        //if(root==NULL) return;
+        if(root->left==NULL && root->right==NULL){
+            s+=to_string(root->val);
+            v1.push_back(s);
+            return;
+        }
+        else{
+            if(root->left) solve(root->left,s+to_string(root->val)+"->",v1);
+            if(root->right) solve(root->right,s+to_string(root->val)+"->",v1);
+        }
+        // s.push_back('0'+root->val);
+        // solve(root->left,s,v1);
+        // s.pop_back();
+        // s.push_back('0'+root->val);
+        // solve(root->right,s,v1);
+        // s.pop_back();
+    }
