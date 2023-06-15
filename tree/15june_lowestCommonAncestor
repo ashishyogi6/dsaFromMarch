@@ -1,0 +1,50 @@
+https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/
+
+without watching any hint or solution 
+brute force:
+done using path
+stored path in stack and pop until same same stored in temp 
+when any one is empty or not common returned temp
+
+TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+        stack<TreeNode*> v1;
+        stack<TreeNode*> v2;
+        bool k=false;
+        solve1(root,k,p,v1);
+        k=false;
+        solve1(root,k,q,v2);
+        TreeNode* temp=root;
+        while(true){
+            if(v1.empty() || v2.empty() || v1.top()->val!=v2.top()->val) return temp;
+            temp=v1.top();
+            v1.pop();
+            v2.pop();
+        }
+        return p;
+    }
+    void solve1(TreeNode* a, bool &k,TreeNode* p,stack<TreeNode*> &v1){
+    if(k==true) return;
+    if(a==NULL) return ;
+    if(a->val==p->val ){
+        v1.push(a);
+        k=true;
+        return;
+    }
+    solve1(a->left,k,p,v1);
+    solve1(a->right,k,p,v1);
+    if(k==true) v1.push(a);
+}
+
+
+
+striver solution and approach
+treaverse and if we find any return it
+otherwise return null
+anytime if both are not null means we have got our answer
+
+if(root==NULL || root==p || root==q) return root;
+        TreeNode* left=lowestCommonAncestor(root->left,p,q);
+        TreeNode* right=lowestCommonAncestor(root->right,p,q);
+        if(left==NULL) return right;
+        else if(right==NULL) return left;
+        else return root;
