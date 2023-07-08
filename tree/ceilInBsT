@@ -18,3 +18,24 @@ int findCeil(Node* root, int input) {
         else return input;
     }
 }
+// optimized and best
+
+int findCeil(Node* root, int input) {
+    if (root == NULL) return -1;
+    int ceil=-1;
+    while(root){
+        if(root->data==input) {
+            ceil=input;
+            break;
+        }
+        else if(input<root->data){
+            ceil=root->data;
+            root=root->left;
+        }
+        
+        else{
+            root=root->right;
+        }
+    }
+    return ceil;
+}
