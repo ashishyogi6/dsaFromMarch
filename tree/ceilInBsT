@@ -1,0 +1,20 @@
+int findCeil(Node* root, int input) {
+    if (root == NULL) return -1;
+    stack<Node*> st;
+    st.push(root);
+    while(!st.empty()){
+        if(st.top()==NULL) {
+            st.pop();
+            while(!st.empty() && st.top()->data<input) st.pop();
+            if(st.empty()) return -1;
+            else return st.top()->data;
+        }
+        if(input<st.top()->data){
+            st.push(st.top()->left);
+        }
+        else if(input>st.top()->data){
+            st.push(st.top()->right);
+        }
+        else return input;
+    }
+}
