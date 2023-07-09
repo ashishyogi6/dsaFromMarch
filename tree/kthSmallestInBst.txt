@@ -1,0 +1,24 @@
+int kthSmallest(TreeNode* root, int k) {
+        bool m=false;
+        int count=0;
+        solve(root,m,count,k);
+        if(m) return count;
+        return -1;
+    }
+
+    void solve(TreeNode* root,bool &m,int &count,int &ans){
+        if(m==true || root==NULL) return;
+        solve(root->left,m,count,ans);
+        if(!m){
+            count++;
+            if(count==ans) {
+                m=true;
+                count=root->val;
+                return;
+            }
+            solve(root->right,m,count,ans);
+        }
+    }
+
+
+    can be optimized little
