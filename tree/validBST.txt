@@ -1,0 +1,12 @@
+bool isValidBST(TreeNode* root) {
+        long left=LONG_MIN,right=LONG_MAX;
+        return solve(root,left,right);
+    }
+
+    bool solve(TreeNode* root,long left,long right){
+        if(root==NULL) return true;
+        long val = (long) root->val;
+        if(val<=left || val>=right) return false;
+            return solve(root->left,left,root->val) && solve(root->right,root->val,right);
+        
+    }
