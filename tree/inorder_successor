@@ -23,3 +23,15 @@ Node * inOrderSuccessor(Node *root, Node *x)
         }
         return temp;
     }
+
+
+striver code:
+Node* temp=Null;
+ while(root!=NULL){
+            if(x->data >= root->data) root=root->right;
+            else{
+                temp=root;
+                root=root->left;
+            }
+        }
+        return temp;
