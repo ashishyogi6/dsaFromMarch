@@ -1,0 +1,15 @@
+https://leetcode.com/problems/flatten-binary-tree-to-linked-list/description/
+
+done by me
+void flatten(TreeNode* root) {
+        if(root==NULL) return;
+        TreeNode* temp=NULL;
+        temp=root->right;
+        swap(root->right,root->left);
+        root->left=NULL;
+        flatten(temp);
+        flatten(root->right);
+        TreeNode* temp2=root;
+        while(temp2->right) temp2=temp2->right;
+        temp2->right=temp;
+    }
