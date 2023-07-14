@@ -1,0 +1,25 @@
+
+
+vector<vector<int>> verticalTraversal(TreeNode* root) {
+        map<int,map<int,multiset<int>>> m;
+        //map<int,multiset<int>> m;
+        int x=0,level=0;
+        solve(root,x,level,m);
+        vector<vector<int>> v;
+        for(auto i:m){
+            vector<int>v1;
+            for(auto j:i.second){
+                for(auto l:j.second){
+                    v1.push_back(l);
+                } 
+            }
+            v.push_back(v1);
+        }
+        return v;
+    }
+     void solve(TreeNode* root,int x,int level,map<int,map<int,multiset<int>>> &m){
+         if(root==NULL) return;
+         m[x][level].insert(root->val);
+         solve(root->left,x-1,level+1,m);
+         solve(root->right,x+1,level+1,m);
+     }
