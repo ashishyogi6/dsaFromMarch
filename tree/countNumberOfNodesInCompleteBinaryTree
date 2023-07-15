@@ -1,0 +1,27 @@
+
+
+int countNodes(TreeNode* root) {
+        if(root==NULL) return 0;
+        int lh=findl(root->left);
+        int rh=findr(root->right);
+        if(lh==rh) return (1<<lh)-1;
+        else return 1+countNodes(root->left)+countNodes(root->right);
+    }
+
+    int findl(TreeNode* root){
+        int count=1;
+        while(root!=NULL){
+            count++;
+            root=root->left;
+        }
+        return count;
+    }
+
+    int findr(TreeNode* root){
+        int count=1;
+        while(root!=NULL){
+            count++;
+            root=root->right;
+        }
+        return count;
+    }
