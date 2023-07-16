@@ -1,0 +1,31 @@
+// done by self from the reference of question 
+// all nodes at distance k in binary tree
+
+public:
+    unordered_map<TreeNode*,pair<TreeNode*,bool>> um;
+    TreeNode* target;
+    int finalTime=0;
+
+    void parents(TreeNode* root,TreeNode* prev,int start){
+        if(!root) return;
+        um[root]={prev,0};
+        if(root->val==start) target=root;
+        parents(root->left,root,start);
+        parents(root->right,root,start);
+    }
+
+    void infect(TreeNode* start,int timer){
+        if(!start || um[start].second==1) return;
+        if(timer>finalTime) finalTime=timer;
+        um[start].second=1;
+        infect(start->left,timer+1);
+        infect(start->right,timer+1);
+        infect(um[start].first,timer+1);
+    }
+
+    int amountOfTime(TreeNode* root, int start) {
+        parents(root,NULL,start);
+        int time=0;
+        infect(target,time);
+        return finalTime;
+    }
