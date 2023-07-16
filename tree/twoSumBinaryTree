@@ -1,0 +1,32 @@
+
+//done by me
+// but can be done in O(H) space complexity using two iterator
+// before and after same as 2 pointer in two sum
+//pick next (smallest) and before(largest) if greater or less occordingly
+
+
+public:
+    TreeNode* prime;
+    void solve(TreeNode* root,int k,bool &ans){
+        if(!root) return;
+        ans=check(prime,root,k-root->val);
+        if(!ans) solve(root->left,k,ans);
+        if(!ans) solve(root->right,k,ans);
+        if(ans) return; 
+    }
+    bool check(TreeNode* root,TreeNode* caller,int val1){
+        if(!root) return false;
+        if(root==caller){
+            if(caller->val<val1) return check(root->right,caller,val1);
+            else return check(root->left,caller,val1);
+        }
+        if(root->val==val1) return true;
+        if(root->val<val1) return check(root->right,caller,val1);
+        else return check(root->left,caller,val1);
+    }
+    bool findTarget(TreeNode* root, int k) {
+        prime=root;
+       bool ans=false;
+       solve(root,k,ans); 
+       return ans;
+    }
