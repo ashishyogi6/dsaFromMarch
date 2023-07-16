@@ -1,0 +1,94 @@
+//done by self
+// first traced path till target except target
+//if distance 0 then returned target value
+//traversed target's left and right 
+//maintained a visited map to not to go in direction of target
+// code quality is very bad looking for optimizations
+
+vector<int> distanceK(TreeNode* root, TreeNode* target, int r) {
+        bool k=false;
+        vector<int> v1;
+        if(r==0) {
+            v1.push_back(target->val);
+            return v1;
+        }
+        stack<TreeNode*> st;
+        map<TreeNode*,bool> visited;
+        solve1(root,target,st,k,visited);
+        solve(target->left,r-1,target,v1,visited);
+        solve(target->right,r-1,target,v1,visited);
+        while(!st.empty()){
+            if(st.size()<=r) {
+                visited[st.top()]=0;
+                solve(st.top(),r-st.size(),target,v1,visited);
+            }
+            st.pop();
+        }
+        return v1;
+    }
+
+    void solve(TreeNode* root,int distance,TreeNode* target,vector<int> &v1,map<TreeNode*,bool> &visited){
+        if(root==NULL || root==target || visited[root]==1) return;
+        if(distance==0){
+            v1.push_back(root->val);
+            return;
+        }
+        solve(root->left,distance-1,target,v1,visited);
+        solve(root->right,distance-1,target,v1,visited);
+    }
+
+    void solve1(TreeNode* root,TreeNode* target,stack<TreeNode*> &st,bool &k,map<TreeNode*,bool> &visited){
+        if(root==NULL) return;
+        if(root==target) {
+            k=true;
+            return;
+        }
+        if(!k) solve1(root->left,target,st,k,visited);
+        if(!k) solve1(root->right,target,st,k,visited);
+        if(k) {
+            st.push(root);
+            visited[root]=1;
+            };
+    }
+
+
+// good and sweet solution
+
+private:
+    unordered_map<TreeNode*, TreeNode*> par;
+    unordered_map<int, bool> vis;
+    vector<int> res;
+    void mapParents(TreeNode* node) {
+        if(node == NULL) return;
+
+        if(node->left) {
+            par[node->left] = node;
+            mapParents(node->left);
+        }
+        if(node->right) {
+            par[node->right] = node;
+            mapParents(node->right);
+        }
+    }
+
+    void solve(TreeNode* target, int k) {
+        if(target == NULL) return;
+        if(vis[target->val]) return;
+
+        vis[target->val] = true;
+        if(k == 0) {
+            res.push_back(target->val);
+            return;
+        }
+        solve(par[target], k-1);
+        solve(target->left, k-1);
+        solve(target->right, k-1);
+    }
+public:
+    vector<int> distanceK(TreeNode* root, TreeNode* target, int k) {
+        par[root] = NULL;
+        mapParents(root);
+
+        solve(target, k);
+        return res;
+    }
