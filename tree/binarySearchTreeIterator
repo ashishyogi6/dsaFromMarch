@@ -1,0 +1,27 @@
+
+public:
+    stack<TreeNode*> st;
+    void solve(TreeNode* root){
+        if(!root) return;
+        solve(root->right);
+        st.push(root);
+        solve(root->left);
+    }
+
+    BSTIterator(TreeNode* root) {
+        solve(root);
+    }
+    
+    int next() {
+        if(!st.empty()){
+            int temp=st.top()->val;
+            st.pop();
+            return temp;
+        }
+        return -1;
+    }
+    
+    bool hasNext() {
+        return (!st.empty());
+    }
+};
