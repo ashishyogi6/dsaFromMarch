@@ -1,0 +1,20 @@
+
+//done by me without any hint or solution
+string FirstNonRepeating(string a){
+		    unordered_map<char,int> um;
+		    queue<char> notVisited;
+		    string ans;
+		    char last=a[0];
+		    notVisited.push(a[0]);
+		    for(int i=0;i<a.length();i++){
+		        um[a[i]]++;
+		        if(um[a[i]]==1) notVisited.push(a[i]);
+		        if(um[notVisited.front()]==1) ans+=notVisited.front();
+		        else{
+		            while(!notVisited.empty() && um[notVisited.front()]!=1) notVisited.pop();
+		            if(notVisited.empty()) ans+='#';
+		            else ans+=notVisited.front();
+		        }
+		    }
+		    return ans;
+		}
