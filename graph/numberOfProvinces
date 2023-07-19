@@ -1,0 +1,52 @@
+// done by me only
+
+int count=0;
+    int findCircleNum(vector<vector<int>>& isConnected) {
+        vector<int> visited(isConnected.size(),0);
+        queue<int> q;
+        for(int i=0;i<isConnected.size();i++){
+            if(!visited[i]){
+                q.push(i);
+                visited[i]=1;
+                count++;
+                while(!q.empty()){
+                    for(int i=0;i<isConnected.size();i++){
+                        if(isConnected[q.front()][i] && !visited[i]) {
+                            q.push(i);
+                            visited[i]=1;
+                        }
+                    }
+                    q.pop();
+                }
+            }
+        }
+        return count;
+    }
+
+
+//striver
+
+int findCircleNum(vector<vector<int>>& isConnected) {
+        n = isConnected.size();
+        visited.resize(n,false);
+        int ans = 0;
+        for(int i=0;i<n;i++){
+            if(!visited[i]){
+                ans++;
+                dfs(isConnected,i);
+            }
+        }
+        return ans;
+        
+    }
+    void dfs(vector<vector<int>>& isConnected,int index){
+        visited[index] = true;
+        for(int i=0;i<n;i++){
+            if(isConnected[index][i]&&!visited[i]){
+                dfs(isConnected,i);
+            }
+        }
+    }
+private:
+    int n;
+    vector<bool>visited;
