@@ -1,0 +1,40 @@
+// easily doable without hint
+// but to learn clean code writing , took help from striver
+
+class Solution {
+private:
+    queue<pair<int,int>> q;
+    int m,n;
+    int start;
+public:
+    vector<vector<int>> floodFill(vector<vector<int>>& image, int sr, int sc, int color) {
+        m=image.size();
+        n=image[0].size();
+        start=image[sr][sc];
+        q.push({sr,sc});
+        image[sr][sc]=color;
+        vector<vector<int>> visited(m, vector<int> (n,0));
+        solve(image,color,visited);
+        return image;
+    }
+
+    void solve(vector<vector<int>>& image,int color,vector<vector<int>>& visited){
+        visited[q.front().first][q.front().second]=1;
+        int dx[4]={0,0,1,-1};
+        int dy[4]={1,-1,0,0};
+        while(!q.empty()){
+            int size=q.size();
+            while(size--){
+                int x=q.front().first,y=q.front().second;
+                q.pop();
+                for(int i=0;i<4;i++){
+                    int nx=x+dx[i],ny=y+dy[i];
+                    if(nx<0 || ny<0 || nx>=m || ny>=n || image[nx][ny]!=start || visited[nx][ny]) continue;
+                    visited[nx][ny]=1;
+                    image[nx][ny]=color;
+                    q.push({nx,ny});
+                }
+            }
+        }
+    }
+};
