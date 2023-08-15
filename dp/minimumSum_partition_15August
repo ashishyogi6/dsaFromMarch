@@ -1,0 +1,40 @@
+//https://practice.geeksforgeeks.org/problems/minimum-sum-partition3317/1
+// bekaar recursive
+int ans=INT_MAX;
+	int minDifference(int arr[], int n)  {
+	    solve(n-1,arr,0,0);
+	    return ans;
+	}
+	void solve(int index,int *arr,int sum1,int sum2){
+	    if(index<0){
+	        if(abs(sum1-sum2)<ans) ans=abs(sum1-sum2);
+	        return;
+	    }
+	    
+	    solve(index-1,arr,sum1,sum2+arr[index]);
+	    solve(index-1,arr,sum1+arr[index],sum2);
+	}
+
+ // tabulation
+
+ int minDifference(int arr[], int n)  { 
+	    int sum=0;
+	    for(int i=0;i<n;i++) sum+=arr[i];
+	    vector<bool> dp(sum+1,0);
+	    dp[0]=1;
+	    for(int i=0;i<n;i++){
+	        vector<bool> curr(sum+1,0);
+	        curr[0]=1;
+	        for(int j=1;j<sum+1;j++){
+	            if(j>=arr[i]) curr[j]=dp[j]||dp[j-arr[i]];
+	            else curr[j]=dp[j];
+	        }
+	        
+	        dp=curr;
+	    }
+	    int sum1=INT_MAX;
+	    for(int i=0;i<sum+1;i++){
+	        if(dp[i]==1) sum1=min(sum1,abs(i - (sum - i)));
+	    }
+	    return sum1;
+	} 
