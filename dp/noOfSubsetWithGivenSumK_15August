@@ -1,0 +1,26 @@
+https://practice.geeksforgeeks.org/problems/perfect-sum-problem5633/1
+
+
+//memoization
+int perfectSum(int arr[], int n, int sum)
+	{
+	    vector<vector<int>> dp(n,vector<int>(sum+1,-1));
+        return solve(n-1,sum,arr,n,dp);
+	}
+	
+	int solve(int index,int target,int *arr,int &n,vector<vector<int>> &dp){
+	    if(index<0){
+	        if(target==0) return 1;
+	        else return 0;
+	    }
+	    
+	    if(dp[index][target]!=-1) return dp[index][target];
+	    
+	    int nottake=0+solve(index-1,target,arr,n,dp);
+	    int take=0;
+	    if(arr[index]<=target) take=solve(index-1,target-arr[index],arr,n,dp);
+	    
+	    return dp[index][target]=((nottake+take)%1000000007);
+	}
+
+ // continue later tabulation
