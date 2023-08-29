@@ -1,0 +1,31 @@
+// we calculated two array one with prefix and one with postfix
+first array with prefix
+and second array with postfix and reverse it
+now it gives (both) gives us the cost and which gives minimum 
+we return it
+
+ int bestClosingTime(string customer) {
+        vector<int> v1,v2;
+        v1.push_back(0);
+        for(int i=1;i<=customer.size();i++){
+            if(customer[i-1]=='N'){
+                v1.push_back(v1[i-1]+1);
+            }
+            else v1.push_back(v1[i-1]);
+        }
+        v2.push_back(0);
+        for(int i=customer.size();i>0;i--){
+            if(customer[i-1]=='Y') v2.push_back(v2[customer.size()-i]+1);
+            else v2.push_back(v2[customer.size()-i]);
+        }
+        reverse(v2.begin(),v2.end());
+        int ans=0,minpt=v1[0]+v2[0];
+        for(int i=0;i<customer.size();i++){
+            if(v1[i+1]+v2[i+1]<minpt){
+                minpt=v1[i+1]+v2[i+1];
+                ans=i+1;
+            }
+        }
+        return ans;
+
+    }
