@@ -1,0 +1,48 @@
+// Watched from striver 
+//initially created an array with all length 1
+//after sorting given array, we traversed in n*n and check if previous element is diving current or not.
+// if diving storing max length in dp
+
+// that's how we will get max length and after that we got that subsequence by help of max length , see code....
+
+
+vector<int> largestDivisibleSubset(vector<int>& nums) {
+
+        //solution which I was thinking initially ,,, Part:-1
+        // vector<vector<int>> dp(nums.size(),vector<int>(nums.size()+1,-1));
+        // sort(nums.begin(),nums.end());
+        // int ans= f(nums,0,-1,dp);
+        // cout<<ans;
+        // for(int i=0;i<nums.size();i++) if(dp[nums.size()-1][i]==1) v1.push_back(nums[i]);
+        // return v1;
+
+        sort(nums.begin(),nums.end());
+        int maxLen=1;;
+        vector<int> dp(nums.size(),1);
+        for(int i=0;i<nums.size();i++){
+            for(int j=0;j<i;j++){
+                if(nums[i]%nums[j]==0) dp[i]=max(dp[i],dp[j]+1);
+                maxLen=max(maxLen,dp[i]);
+            }
+        }
+        vector<int> ans;
+        int prev=-1;
+        for(int i=nums.size()-1;i>=0;i--){
+            if(dp[i]==maxLen && (prev==-1 || prev%nums[i]==0)){
+                ans.emplace_back(nums[i]);
+                maxLen--;
+                prev=nums[i];
+            }
+        }
+        return ans;
+
+    }
+    // Part:-2
+    // int f(vector<int> &nums,int ind,int prev,vector<vector<int>>&dp){
+    //     if(ind==nums.size()) return 0;
+    //     if(dp[ind][prev+1]!=-1) return dp[ind][prev+1];
+    //     int nottake=0+f(nums,ind+1,prev,dp);
+    //     int take=0;
+    //     if(prev==-1 || nums[ind]%nums[prev]==0 || nums[prev]%nums[ind]==0) take=1+f(nums,ind+1,ind,dp);
+    //     return dp[ind][prev+1]=max(take,nottake);
+    // }
